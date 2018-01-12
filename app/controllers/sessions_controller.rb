@@ -4,9 +4,10 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(email: auth_params[:email])
     if @user.authenticate(auth_params[:password])
-      jwt = Auth.issue({user: user.id})
-      render json: {jwt: jwt}
+      auth_token = Auth.encode({user: @user.id})
+      render json: {auth_token: auth_token}
     else
+      render json: {error: "unauthorized"}, status: 401
     end
   end
 
