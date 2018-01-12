@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
-  resources :games
+  post '/login', to: "sessions#create"
+
   resources :users
+  resources :games
+
 end
